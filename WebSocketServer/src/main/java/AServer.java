@@ -1,4 +1,4 @@
-import Endpoints.Chat.ChatEndpoint;
+import Endpoints.Chat.ServerEndpoint;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.ServerConnector;
 import org.eclipse.jetty.servlet.ServletContextHandler;
@@ -40,7 +40,7 @@ public class AServer {
             ServerContainer wscontainer = WebSocketServerContainerInitializer.configureContext(webSocketContext);
 
             // Add WebSocket endpoint to javax.websocket layer
-            wscontainer.addEndpoint(Endpoints.Chat.ChatEndpoint.class);
+            wscontainer.addEndpoint(ServerEndpoint.class);
 
             webSocketServer.start();
             //server.dump(System.err);

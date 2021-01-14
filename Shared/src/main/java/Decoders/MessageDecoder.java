@@ -1,4 +1,4 @@
-package Endpoints.Chat;
+package Decoders;
 
 import classes.Message;
 import com.google.gson.Gson;

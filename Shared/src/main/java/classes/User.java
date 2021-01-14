@@ -1,0 +1,53 @@
+package classes;
+
+import javax.websocket.Session;
+
+public class User {
+    //fields
+    private int id;
+    private transient Session session;
+    private String name;
+    private String password;
+    private boolean turn = false;
+
+    //getters and setters
+    public int getId() { return id; }
+
+    public String getName() { return name; }
+    public void setName(String name) { this.name = name; }
+
+    public String getPassword() { return password; }
+    public void setPassword(String password) { this.password = password; }
+
+    public Session getSession() { return session; }
+    public void setSession(Session session) { this.session = session; }
+
+    public boolean isTurn() { return turn; }
+    public void setTurn(boolean turn) { this.turn = turn; }
+
+    //constructors
+    public User(){
+
+    }
+
+    public User(int id, String name, String password){
+        this.id = id;
+        this.name = name;
+        this.password = password;
+    }
+
+    public User(int id, String name, String password, int sessionId){
+        this.id = id;
+        this.name = name;
+        this.password = password;
+    }
+
+    //methods
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "name='" + name + '\'' +
+                '}';
+    }
+}
