@@ -75,17 +75,16 @@ public class ServerEndpoint {
                 //code here
                 msg.getUser().setSession(session);
                 game.addPlayer(msg.getUser());
+                Message registered = new Message();
+                registered.setFrom("Server");
+                registered.setCommandType(Register);
+                registered.setContent("Waiting for other player");
+                registered.setUser(msg.getUser());
+                msg.getUser().getSession().getAsyncRemote().sendObject(registered);
                 if(game.getGameState() == Ready){
                     game.startGame();
                     Message toReturn = game.startGame();
                     toReturn.getUser().getSession().getAsyncRemote().sendObject(toReturn);
-                }
-                else{
-                    Message toReturn = new Message();
-                    toReturn.setFrom("Server");
-                    toReturn.setCommandType(Register);
-                    toReturn.setContent("Waiting for other player");
-                    msg.getUser().getSession().getAsyncRemote().sendObject(toReturn);
                 }
                 break;
 

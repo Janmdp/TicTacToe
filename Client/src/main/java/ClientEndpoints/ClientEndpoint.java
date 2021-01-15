@@ -1,9 +1,11 @@
 package ClientEndpoints;
 
+import Client.Controller;
 import Decoders.MessageDecoder;
 import Encoders.MessageEncoder;
 import Enums.CommandType;
 import classes.Message;
+import javafx.application.Platform;
 
 import javax.websocket.*;
 import java.io.IOException;
@@ -14,6 +16,9 @@ import java.net.URISyntaxException;
         encoders = MessageEncoder.class)
 public class ClientEndpoint {
     private static ClientEndpoint instance = null;
+    private Controller controller;
+
+    public void setController(Controller controller) { this.controller = controller; }
 
     /**
      * The local websocket uri to connect to.
@@ -69,19 +74,45 @@ public class ClientEndpoint {
             case Register:
                 //code here
                 System.out.println("[WebSocket Client message received] " + message.getContent() );
+                Platform.runLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        controller.showMessage(message.getContent());
+                    }
+                });
                 break;
 
             case Turn:
                 //code here
                 System.out.println("[WebSocket Client message received] " + message.getContent() );
+                Platform.runLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        controller.showMessage(message.getContent());
+                        controller.updateSquare(message);
+                        controller.toggleButtons(message.getUser().isTurn());
+                    }
+                });
                 break;
 
             case Victory:
                 //code here
+                Platform.runLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        controller.showMessage(message.getContent());
+                    }
+                });
                 break;
 
             case Loss:
                 //code here
+                Platform.runLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        controller.showMessage(message.getContent());
+                    }
+                });
                 break;
         }
     }

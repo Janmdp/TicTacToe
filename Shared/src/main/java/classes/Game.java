@@ -38,7 +38,10 @@ public class Game {
 
     //methods
     public Message startGame(){
-        board = new SquareState[8];
+        board = new SquareState[9];
+        for(int i = 0; i< board.length; i++){
+            board[i] = Empty;
+        }
         user1.setTurn(true);
         gameState = Started;
         Message msg = new Message();
@@ -51,15 +54,13 @@ public class Game {
 
     public List<Message> updateBoard(Message incoming){
         List<Message> toReturn = new ArrayList<Message>();
-        try{
-            if(checkSquareEmpty(incoming.getLocation())){
-                board[incoming.getLocation()] = toFill(incoming.getUser());
-                return turn(incoming);
-            }
-        }
-        catch(Exception e){
 
+        if(checkSquareEmpty(incoming.getLocation())){
+            board[incoming.getLocation()] = toFill(incoming.getUser());
+            incoming.setSquareState(toFill(incoming.getUser()));
+            return turn(incoming);
         }
+
         return toReturn;
     }
 
@@ -73,10 +74,10 @@ public class Game {
     }
 
     private SquareState toFill(User incoming){
-        if(incoming == user1){
+        if(incoming.getId() == user1.getId()){
             return Cross;
         }
-        else if(incoming == user2){
+        else if(incoming.getId() == user2.getId()){
             return Circle;
         }
         return Empty;
