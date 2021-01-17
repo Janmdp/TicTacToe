@@ -15,13 +15,13 @@
         <tabs>
           <Tab text="Untitled Tab 1">
             <content>
-              <AnchorPane fx:id="btnLogin" minHeight="0.0" minWidth="0.0" prefHeight="171.0" prefWidth="235.0">
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="171.0" prefWidth="235.0">
                      <children>
-                        <Button fx:id="btnLogin" layoutX="229.0" layoutY="204.0" mnemonicParsing="false" text="Login" />
+                        <Button fx:id="btnLogin" layoutX="229.0" layoutY="204.0" mnemonicParsing="false" onAction="#tryLogin" text="Login" />
                         <TextField fx:id="tboxName" layoutX="176.0" layoutY="119.0" />
                         <Label layoutX="176.0" layoutY="102.0" text="Name" />
                         <Label layoutX="176.0" layoutY="151.0" text="Password" />
-                        <TextField fx:id="tboxName" layoutX="177.0" layoutY="168.0" />
+                        <PasswordField fx:id="tboxPassword" layoutX="176.0" layoutY="168.0" />
                      </children></AnchorPane>
             </content>
           </Tab>

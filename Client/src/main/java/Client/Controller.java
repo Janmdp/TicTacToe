@@ -8,24 +8,24 @@ import ClientEndpoints.ClientEndpoint;
 import Enums.SquareState;
 import classes.Message;
 import classes.User;
+import User.UserData;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.TabPane;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.List;
 import java.util.Random;
 import java.util.ResourceBundle;
 
 public class Controller implements Initializable {
-    Random rand = new Random();
-    User hardCoded = new User(rand.nextInt(10),"Jan", "Test");
+
+    UserData userData = new UserData();
+    User user;
     private ClientEndpoint clientEndpoint;
     private SquareState[] board = new SquareState[9];
     Image circle;
@@ -41,11 +41,13 @@ public class Controller implements Initializable {
     public Button btn6;
     public Button btn7;
     public Button btn8;
+    public TextField tboxName;
+    public PasswordField tboxPassword;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
-        tPane.getSelectionModel().select(1);
+
         circle = new Image("https://image.flaticon.com/icons/png/512/32/32341.png");
         cross = new Image("https://static.thenounproject.com/png/1479017-200.png");
         buttons[0] = btn0;
@@ -69,6 +71,10 @@ public class Controller implements Initializable {
         board[8] = Empty;
 
         toggleButtons(false);
+
+    }
+
+    private void connectToServer(){
         clientEndpoint = new ClientEndpoint();
         clientEndpoint.setController(this);
         clientEndpoint.start();
@@ -76,7 +82,7 @@ public class Controller implements Initializable {
         msg.setFrom("Client");
         msg.setCommandType(Register);
         msg.setContent("Registering to server");
-        msg.setUser(hardCoded);
+        msg.setUser(user);
         clientEndpoint.sendMessageToServer(msg);
     }
 
@@ -124,7 +130,7 @@ public class Controller implements Initializable {
                 Message msg = new Message();
                 msg.setFrom("Client");
                 msg.setCommandType(Turn);
-                msg.setUser(hardCoded);
+                msg.setUser(user);
                 msg.setContent("User did something");
                 msg.setLocation(i);
                 clientEndpoint.sendMessageToServer(msg);
@@ -140,6 +146,20 @@ public class Controller implements Initializable {
             else{
                 buttons[i].setDisable(true);
             }
+        }
+    }
+
+    public void tryLogin(ActionEvent actionEvent) throws IOException, InterruptedException {
+        String name = tboxName.getText();
+        String password = tboxPassword.getText();
+        user = userData.tryLogin(name, password);
+        if(user != null){
+            showMessage("Succesfully logged in!");
+            connectToServer();
+            tPane.getSelectionModel().select(1);
+        }
+        else{
+            showMessage("Login attempt failed!");
         }
     }
 }

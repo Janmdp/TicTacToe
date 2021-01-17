@@ -12,6 +12,8 @@
         <module>Shared</module>
         <module>Client</module>
         <module>WebSocketServer</module>
+        <module>UnitTests</module>
+        <module>DataAccesLayer</module>
     </modules>
 
     <properties>
@@ -37,5 +39,7 @@
             <version>9.4.15.v20190215</version>
         </dependency>
     </dependencies>
+
+
     
 </project>

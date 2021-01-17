@@ -86,6 +86,7 @@ public class Game {
     public void addPlayer(User user){
         if(user1 == null){
             user1 = user;
+            this.gameState = Waiting;
         }
         else{
             user2 = user;
