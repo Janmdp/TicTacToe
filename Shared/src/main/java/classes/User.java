@@ -9,6 +9,7 @@ public class User {
     private String name;
     private String password;
     private boolean turn = false;
+    private String jwtToken;
 
     //getters and setters
     public int getId() { return id; }
@@ -24,6 +25,9 @@ public class User {
 
     public boolean isTurn() { return turn; }
     public void setTurn(boolean turn) { this.turn = turn; }
+
+    public String getJwtToken() { return jwtToken; }
+    public void setJwtToken(String jwtToken) { this.jwtToken = jwtToken; }
 
     //constructors
     public User(){

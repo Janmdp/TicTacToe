@@ -61,9 +61,9 @@ public class ServerEndpoint {
             //synchronized (endpoint) {
                 //try {
                     //endpoint.session.getBasicRemote().
-                          //  sendObject(message);
+                           // sendObject(message);
                 //} catch (IOException | EncodeException e) {
-                  //  e.printStackTrace();
+                   // e.printStackTrace();
                 //}
             //}
         //});

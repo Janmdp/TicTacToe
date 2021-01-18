@@ -50,10 +50,10 @@ public class UserData {
         HttpRequest request = HttpRequest.newBuilder()
                 .POST(HttpRequest.BodyPublishers.ofString(requestbody))
                 .header("accept", "application/json")
-                .uri(URI.create(URL))
+                .setHeader("Content-type", "application/json")
+                .uri(URI.create(GET_URL))
                 .build();
         HttpResponse response = client.send(request, HttpResponse.BodyHandlers.ofString());
-
         System.out.println(response.statusCode());
         if(response.statusCode() == HttpStatus.OK_200){
             return true;
