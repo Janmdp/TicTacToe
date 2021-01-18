@@ -22,6 +22,7 @@
                         <Label layoutX="176.0" layoutY="102.0" text="Name" />
                         <Label layoutX="176.0" layoutY="151.0" text="Password" />
                         <PasswordField fx:id="tboxPassword" layoutX="176.0" layoutY="168.0" />
+                        <Button fx:id="btnRegister" layoutX="221.0" layoutY="244.0" mnemonicParsing="false" onAction="#registerUser" text="Register" />
                      </children></AnchorPane>
             </content>
           </Tab>

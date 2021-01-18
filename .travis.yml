@@ -3,7 +3,7 @@ jdk:
   - openjdk15
 
 script:
-  - mvn test -B
+  - mvn clean install
 
 notifications:
   email: jan.eickmans@hotmail.nl

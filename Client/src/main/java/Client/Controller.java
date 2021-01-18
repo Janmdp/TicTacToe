@@ -150,8 +150,10 @@ public class Controller implements Initializable {
     }
 
     public void tryLogin(ActionEvent actionEvent) throws IOException, InterruptedException {
-        String name = tboxName.getText();
-        String password = tboxPassword.getText();
+        login(tboxName.getText(), tboxPassword.getText());
+    }
+
+    private void login(String name, String password) throws IOException, InterruptedException {
         user = userData.tryLogin(name, password);
         if(user != null){
             showMessage("Succesfully logged in!");
@@ -161,5 +163,13 @@ public class Controller implements Initializable {
         else{
             showMessage("Login attempt failed!");
         }
+    }
+    public void registerUser(ActionEvent actionEvent) throws IOException, InterruptedException {
+        String name = tboxName.getText();
+        String password = tboxPassword.getText();
+        if(userData.register(name,password)){
+            login(name,password);
+        }
+
     }
 }

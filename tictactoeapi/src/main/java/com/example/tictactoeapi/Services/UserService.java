@@ -48,4 +48,11 @@ public class UserService {
         }
         return user;
     }
+
+    public void register(String name, String password){
+        UserModel model = new UserModel();
+        model.setName(name);
+        model.setPassword(password);
+        repo.save(model);
+    }
 }

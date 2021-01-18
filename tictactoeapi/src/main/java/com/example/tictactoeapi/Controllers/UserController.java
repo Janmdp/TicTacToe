@@ -26,9 +26,21 @@ public class UserController {
     public User getById(@PathVariable Integer id){
         return service.get(id);
     }
-    @GetMapping("/login")
+    @GetMapping("/user")
     public User login(@RequestParam String name, @RequestParam String password){
-        return service.login(name,password);
+        return service.login(name,bCryptPasswordEncoder.encode(password));
     }
+    @PostMapping("/user")
+    public void register(@RequestParam String name, @RequestParam String password){
+        service.register(name,bCryptPasswordEncoder.encode(password));
+    }
+    @PostMapping("/authenticate")
+   public String generateToken(@RequestBody AuthRequest authRequest){
+        //authenticationManager.authenticate(
+       //         new UsernamePasswordAuthenticationToken(authRequest.getUserName(), authRequest.getPassword())
+        //);
+        return "empty";
+   }
+
 
 }
