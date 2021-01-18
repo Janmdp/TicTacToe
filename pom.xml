@@ -12,7 +12,6 @@
         <module>Shared</module>
         <module>Client</module>
         <module>WebSocketServer</module>
-        <module>UnitTests</module>
         <module>DataAccesLayer</module>
     </modules>
 
