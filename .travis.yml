@@ -3,7 +3,6 @@ jdk:
   - openjdk15
 
 script:
-  - mvn clean install
   - mvn test
 
 notifications:
