@@ -89,7 +89,9 @@ public class ClientEndpoint {
                     @Override
                     public void run() {
                         controller.showMessage(message.getContent());
-                        controller.updateSquare(message);
+                        if(message.getPosition() != null){
+                            controller.updateSquare(message);
+                        }
                         controller.toggleButtons(message.getUser().isTurn());
                     }
                 });

@@ -3,6 +3,9 @@ package Endpoints.Chat;
 import Decoders.MessageDecoder;
 import Encoders.MessageEncoder;
 import static Enums.CommandType.*;
+
+import Enums.SquareState;
+import classes.Board;
 import classes.Game;
 import static Enums.GameState.*;
 import classes.Message;

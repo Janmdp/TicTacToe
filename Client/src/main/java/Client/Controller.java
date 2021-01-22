@@ -7,6 +7,7 @@ import static Enums.SquareState.*;
 import ClientEndpoints.ClientEndpoint;
 import Enums.SquareState;
 import classes.Message;
+import classes.Position;
 import classes.User;
 import User.UserData;
 import javafx.event.ActionEvent;
@@ -27,10 +28,10 @@ public class Controller implements Initializable {
     UserData userData = new UserData();
     User user;
     private ClientEndpoint clientEndpoint;
-    private SquareState[] board = new SquareState[9];
+    private SquareState[][] board = new SquareState[3][3];
     Image circle;
     Image cross;
-    Button[] buttons = new Button[9];
+    Button[][] buttons = new Button[3][3];
     public TabPane tPane;
     public Button btn0;
     public Button btn1;
@@ -50,25 +51,35 @@ public class Controller implements Initializable {
 
         circle = new Image("https://image.flaticon.com/icons/png/512/32/32341.png");
         cross = new Image("https://static.thenounproject.com/png/1479017-200.png");
-        buttons[0] = btn0;
-        buttons[1] = btn1;
-        buttons[2] = btn2;
-        buttons[3] = btn3;
-        buttons[4] = btn4;
-        buttons[5] = btn5;
-        buttons[6] = btn6;
-        buttons[7] = btn7;
-        buttons[8] = btn8;
+        buttons[0][0] = btn0;
+        buttons[0][1] = btn1;
+        buttons[0][2] = btn2;
+        buttons[1][0] = btn3;
+        buttons[1][1] = btn4;
+        buttons[1][2] = btn5;
+        buttons[2][0] = btn6;
+        buttons[2][1] = btn7;
+        buttons[2][2] = btn8;
 
-        board[0] = Empty;
-        board[1] = Empty;
-        board[2] = Empty;
-        board[3] = Empty;
-        board[4] = Empty;
-        board[5] = Empty;
-        board[6] = Empty;
-        board[7] = Empty;
-        board[8] = Empty;
+        for(int row = 0; row < buttons.length; row++){
+            String s ="";
+            for(int col = 0; col < buttons.length; col++){
+                s = s + buttons[row][col].getId() + " | ";
+            }
+            System.out.println(s);
+            System.out.println("--------------------");
+        }
+
+
+        board[0][0] = Empty;
+        board[0][1] = Empty;
+        board[0][2] = Empty;
+        board[1][0] = Empty;
+        board[1][1] = Empty;
+        board[1][2] = Empty;
+        board[2][0] = Empty;
+        board[2][1] = Empty;
+        board[2][2] = Empty;
 
         toggleButtons(false);
 
@@ -114,38 +125,43 @@ public class Controller implements Initializable {
     }
 
     public void updateSquare(Message message){
-        buttons[message.getLocation()].setGraphic(getImage(message.getSquareState()));
-        buttons[message.getLocation()].setDisable(true);
-        board[message.getLocation()] = message.getSquareState();
+        buttons[message.getPosition().getPosX()][message.getPosition().getPosY()].setGraphic(getImage(message.getSquareState()));
+        buttons[message.getPosition().getPosX()][message.getPosition().getPosY()].setDisable(true);
+        board[message.getPosition().getPosX()][message.getPosition().getPosY()] = message.getSquareState();
     }
 
 
     public void ClaimSquare(ActionEvent actionEvent) {
-        System.out.println("Method triggered");
         Button clicked = (Button) actionEvent.getSource();
-        for(int i = 0; i < buttons.length; i++){
-            if(buttons[i] == clicked){
-                //Send coordinate to server
-                System.out.println("matched button: " + i);
-                Message msg = new Message();
-                msg.setFrom("Client");
-                msg.setCommandType(Turn);
-                msg.setUser(user);
-                msg.setContent("User did something");
-                msg.setLocation(i);
-                clientEndpoint.sendMessageToServer(msg);
+        for(int row = 0; row < buttons.length; row++){
+            for (int col = 0; col < buttons.length; col++){
+                if(buttons[row][col] == clicked){
+                    //Send coordinate to server
+                    System.out.println("matched button: y=" + row + " x=" + col);
+                    Message msg = new Message();
+                    msg.setFrom("Client");
+                    msg.setCommandType(Turn);
+                    msg.setUser(user);
+                    msg.setContent("User did something");
+                    msg.setPosition(new Position(row,col));
+                    clientEndpoint.sendMessageToServer(msg);
+                }
             }
+
         }
     }
 
     public void toggleButtons(boolean turn){
-        for(int i = 0; i < buttons.length; i++){
-            if(turn && board[i] == Empty){
-                buttons[i].setDisable(false);
+        for(int row = 0; row < buttons.length; row++){
+            for(int col = 0; col < buttons.length; col++){
+                if(turn && board[row][col] == Empty){
+                    buttons[row][col].setDisable(false);
+                }
+                else{
+                    buttons[row][col].setDisable(true);
+                }
             }
-            else{
-                buttons[i].setDisable(true);
-            }
+
         }
     }
 

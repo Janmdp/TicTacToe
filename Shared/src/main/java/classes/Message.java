@@ -8,7 +8,7 @@ public class Message {
     private CommandType commandType;
     private User user;
     private String content;
-    private int location;
+    private Position pos;
     private SquareState squareState;
 
     //standard constructors, getters, setters
@@ -16,12 +16,12 @@ public class Message {
 
     }
 
-    public Message(String from, CommandType cType, User user, String content, int location, SquareState squareState) {
+    public Message(String from, CommandType cType, User user, String content, Position pos, SquareState squareState) {
         this.from = from;
         this.commandType = cType;
         this.user = user;
         this.content = content;
-        this.location = location;
+        this.pos = pos;
         this.squareState = squareState;
     }
 
@@ -38,8 +38,8 @@ public class Message {
     public String getContent() { return content; }
     public void setContent(String content) { this.content = content; }
 
-    public int getLocation() { return location; }
-    public void setLocation(int location) { this.location = location; }
+    public Position getPosition() { return pos; }
+    public void setPosition(Position pos) { this.pos = pos; }
 
     public SquareState getSquareState() { return squareState; }
     public void setSquareState(SquareState squareState) { this.squareState = squareState; }
@@ -50,7 +50,7 @@ public class Message {
                 "commandType=" + commandType +
                 ", user=" + user +
                 ", msg='" + content + '\'' +
-                ", location=" + location +
+                ", location=" + pos +
                 ", squareState=" + squareState +
                 '}';
     }
