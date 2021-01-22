@@ -5,10 +5,9 @@ import Encoders.MessageEncoder;
 import static Enums.CommandType.*;
 
 import Enums.SquareState;
-import classes.Board;
-import classes.Game;
+import classes.*;
+
 import static Enums.GameState.*;
-import classes.Message;
 
 import javax.websocket.*;
 import java.io.IOException;
@@ -24,7 +23,7 @@ public class ServerEndpoint {
 
     private Session session;
 
-    private static Game game = new Game();
+    private static IGameInterface game = new Game();
 
     @OnOpen
     public void onOpen(Session session) throws IOException, EncodeException {
@@ -76,6 +75,9 @@ public class ServerEndpoint {
         switch(msg.getCommandType()){
             case Register:
                 //code here
+                if(msg.isSingleplayer()){
+                    game = new AIGame();
+                }
                 msg.getUser().setSession(session);
                 game.addPlayer(msg.getUser());
                 Message registered = new Message();
@@ -85,7 +87,6 @@ public class ServerEndpoint {
                 registered.setUser(msg.getUser());
                 msg.getUser().getSession().getAsyncRemote().sendObject(registered);
                 if(game.getGameState() == Ready){
-                    game.startGame();
                     Message toReturn = game.startGame();
                     toReturn.getUser().getSession().getAsyncRemote().sendObject(toReturn);
                 }
@@ -96,6 +97,12 @@ public class ServerEndpoint {
                 List<Message> messages = game.updateBoard(msg);
                 for (Message message:messages) {
                     message.getUser().getSession().getAsyncRemote().sendObject(message);
+                }
+                if(game.checkGameOver()){
+                    List<Message> msgs = game.sendGameOver();
+                    for (Message m: msgs){
+                        m.getUser().getSession().getAsyncRemote().sendObject(m);
+                    }
                 }
                 break;
         }

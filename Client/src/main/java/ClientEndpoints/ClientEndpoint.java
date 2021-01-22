@@ -97,22 +97,13 @@ public class ClientEndpoint {
                 });
                 break;
 
-            case Victory:
+            case EndGame:
                 //code here
                 Platform.runLater(new Runnable() {
                     @Override
                     public void run() {
                         controller.showMessage(message.getContent());
-                    }
-                });
-                break;
-
-            case Loss:
-                //code here
-                Platform.runLater(new Runnable() {
-                    @Override
-                    public void run() {
-                        controller.showMessage(message.getContent());
+                        controller.endGame(message.getUser().isTurn());
                     }
                 });
                 break;

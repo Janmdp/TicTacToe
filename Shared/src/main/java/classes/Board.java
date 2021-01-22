@@ -2,18 +2,28 @@ package classes;
 
 import Enums.SquareState;
 
+import java.sql.SQLInvalidAuthorizationSpecException;
+
 public class Board {
     private final SquareState[][] board;
     private int BOARD_WIDTH = 3;
     private int BOARD_HEIGHT = 3;
     private char winningMark;
-    private boolean gameOver;
+    private boolean gameOver = false;
 
     public char getMarkAt(int row, int column) {
         return board[row][column].getMark();
     }
 
+    public boolean isGameOver() { return gameOver; }
+
+    public char getWinningMark() { return winningMark; }
+
     public SquareState[][] getBoard() { return board; }
+
+    public void setSquareAt(Position pos, SquareState squareState){
+        board[pos.getPosX()][pos.getPosY()] = squareState;
+    }
 
     public Board(){
         board = new SquareState[BOARD_WIDTH][BOARD_HEIGHT];

@@ -1,6 +1,7 @@
 package classes;
 
 import Enums.GameState;
+import Enums.GameType;
 import org.junit.Test;
 import static org.junit.Assert.*;
 

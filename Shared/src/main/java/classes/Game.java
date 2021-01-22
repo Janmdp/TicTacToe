@@ -1,6 +1,7 @@
 package classes;
 
 import Enums.GameState;
+import Enums.GameType;
 import Enums.SquareState;
 
 import static Enums.CommandType.*;
@@ -13,7 +14,7 @@ import java.util.List;
 import static Enums.SquareState.*;
 import static Enums.GameState.*;
 
-public class Game {
+public class Game implements IGameInterface {
     //fields
     private static int id = 0;
     private User user1;
@@ -23,7 +24,9 @@ public class Game {
 
 
     //constructors
-    public Game(){this.id ++;}
+    public Game(){
+        this.id ++;
+    }
 
     //Getters and Setters
     public User getUser1() { return user1; }
@@ -33,7 +36,6 @@ public class Game {
     public void setUser2(User user2) { this.user2 = user2; }
 
     public GameState getGameState() { return gameState; }
-
     public void setGameState(GameState gameState) { this.gameState = gameState; }
 
     //methods
@@ -87,7 +89,7 @@ public class Game {
             user1.setTurn(false);
             user2.setTurn(true);
             Message msg1 = new Message("Server",Turn,user1,"Your turn is now over!", message.getPosition(), message.getSquareState());
-            Message msg2 = new Message("Server",Turn,user2,"Your turn is now over!", message.getPosition(), message.getSquareState());
+            Message msg2 = new Message("Server",Turn,user2,"It's now your turn!", message.getPosition(), message.getSquareState());
             toReturn.add(msg1);
             toReturn.add(msg2);
             return toReturn;
@@ -95,8 +97,80 @@ public class Game {
         else{
             user1.setTurn(true);
             user2.setTurn(false);
-            Message msg1 = new Message("Server",Turn,user1,"Your turn is now over!", message.getPosition(), message.getSquareState());
+            Message msg1 = new Message("Server",Turn,user1,"It's now your turn!", message.getPosition(), message.getSquareState());
             Message msg2 = new Message("Server",Turn,user2,"Your turn is now over!", message.getPosition(), message.getSquareState());
+            toReturn.add(msg1);
+            toReturn.add(msg2);
+            return toReturn;
+        }
+    }
+
+    public boolean checkGameOver() {
+        if(board.isGameOver()){
+            this.gameState = Ended;
+            return true;
+        }
+        return false;
+    }
+
+    public List<Message> sendGameOver() {
+        List<Message> toReturn = new ArrayList<Message>();
+        if(board.getWinningMark() == 'X'){
+            user1.setTurn(false);
+            user2.setTurn(false);
+
+            Message msg1 = new Message();
+            msg1.setFrom("server");
+            msg1.setCommandType(EndGame);
+            msg1.setUser(user1);
+            msg1.setContent("You won!");
+
+            Message msg2 = new Message();
+            msg1.setFrom("server");
+            msg1.setCommandType(EndGame);
+            msg1.setUser(user2);
+            msg1.setContent("You lost!");
+
+            toReturn.add(msg1);
+            toReturn.add(msg2);
+            return toReturn;
+        }
+        else if(board.getWinningMark() == 'O'){
+            user1.setTurn(false);
+            user2.setTurn(false);
+
+            Message msg1 = new Message();
+            msg1.setFrom("server");
+            msg1.setCommandType(EndGame);
+            msg1.setUser(user1);
+            msg1.setContent("You lost!");
+
+            Message msg2 = new Message();
+            msg1.setFrom("server");
+            msg1.setCommandType(EndGame);
+            msg1.setUser(user2);
+            msg1.setContent("You won!");
+
+            toReturn.add(msg1);
+            toReturn.add(msg2);
+            return toReturn;
+        }
+        else{
+            user1.setTurn(false);
+            user2.setTurn(false);
+
+            Message msg1 = new Message();
+            msg1.setFrom("server");
+            msg1.setCommandType(EndGame);
+            msg1.setUser(user1);
+            msg1.setContent("Draw!");
+
+            Message msg2 = new Message();
+            msg1.setFrom("server");
+            msg1.setCommandType(EndGame);
+            msg1.setUser(user2);
+            msg1.setContent("Draw!");
+
             toReturn.add(msg1);
             toReturn.add(msg2);
             return toReturn;

@@ -25,10 +25,12 @@ import java.util.ResourceBundle;
 
 public class Controller implements Initializable {
 
+
     UserData userData = new UserData();
     User user;
     private ClientEndpoint clientEndpoint;
     private SquareState[][] board = new SquareState[3][3];
+    private boolean singleplayer = false;
     Image circle;
     Image cross;
     Button[][] buttons = new Button[3][3];
@@ -44,6 +46,7 @@ public class Controller implements Initializable {
     public Button btn8;
     public TextField tboxName;
     public PasswordField tboxPassword;
+    public CheckBox cBoxSingle;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -92,6 +95,7 @@ public class Controller implements Initializable {
         Message msg = new Message();
         msg.setFrom("Client");
         msg.setCommandType(Register);
+        msg.setSingleplayer(singleplayer);
         msg.setContent("Registering to server");
         msg.setUser(user);
         clientEndpoint.sendMessageToServer(msg);
@@ -187,5 +191,18 @@ public class Controller implements Initializable {
             login(name,password);
         }
 
+    }
+
+    public void endGame(boolean turn){
+        toggleButtons(turn);
+    }
+
+    public void toggleSingleplayer(ActionEvent actionEvent) {
+        if(cBoxSingle.isSelected()){
+            singleplayer = true;
+        }
+        else{
+            singleplayer= false;
+        }
     }
 }

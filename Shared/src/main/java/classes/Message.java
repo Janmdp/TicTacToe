@@ -10,6 +10,7 @@ public class Message {
     private String content;
     private Position pos;
     private SquareState squareState;
+    private boolean singleplayer = false;
 
     //standard constructors, getters, setters
     public Message() {
@@ -43,6 +44,9 @@ public class Message {
 
     public SquareState getSquareState() { return squareState; }
     public void setSquareState(SquareState squareState) { this.squareState = squareState; }
+
+    public boolean isSingleplayer() { return singleplayer; }
+    public void setSingleplayer(boolean singleplayer) { this.singleplayer = singleplayer; }
 
     @Override
     public String toString() {
