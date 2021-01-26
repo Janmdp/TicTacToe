@@ -126,10 +126,10 @@ public class Game implements IGameInterface {
             msg1.setContent("You won!");
 
             Message msg2 = new Message();
-            msg1.setFrom("server");
-            msg1.setCommandType(EndGame);
-            msg1.setUser(user2);
-            msg1.setContent("You lost!");
+            msg2.setFrom("server");
+            msg2.setCommandType(EndGame);
+            msg2.setUser(user2);
+            msg2.setContent("You lost!");
 
             toReturn.add(msg1);
             toReturn.add(msg2);
@@ -146,10 +146,10 @@ public class Game implements IGameInterface {
             msg1.setContent("You lost!");
 
             Message msg2 = new Message();
-            msg1.setFrom("server");
-            msg1.setCommandType(EndGame);
-            msg1.setUser(user2);
-            msg1.setContent("You won!");
+            msg2.setFrom("server");
+            msg2.setCommandType(EndGame);
+            msg2.setUser(user2);
+            msg2.setContent("You won!");
 
             toReturn.add(msg1);
             toReturn.add(msg2);
@@ -166,14 +166,15 @@ public class Game implements IGameInterface {
             msg1.setContent("Draw!");
 
             Message msg2 = new Message();
-            msg1.setFrom("server");
-            msg1.setCommandType(EndGame);
-            msg1.setUser(user2);
-            msg1.setContent("Draw!");
+            msg2.setFrom("server");
+            msg2.setCommandType(EndGame);
+            msg2.setUser(user2);
+            msg2.setContent("Draw!");
 
             toReturn.add(msg1);
             toReturn.add(msg2);
             return toReturn;
         }
     }
+
 }
